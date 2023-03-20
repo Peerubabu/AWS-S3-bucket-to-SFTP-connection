@@ -1,0 +1,54 @@
+provider "aws" {
+  region = "eu-west-1"
+  access_key = "my-access key"
+  secret_key = "my-secret key"
+}
+
+module "sftp_to_s3" {
+  source = "your-sftp-to-s3-module-source-here"
+
+  sftp_host = "your-sftp-host-here"
+  sftp_port = "your-sftp-port-here"
+  sftp_username = "your-sftp-username-here"
+  sftp_password = "your-sftp-password-here"
+
+  s3_bucket = "your-s3-bucket-name-here"
+  s3_key_prefix = "your-s3-bucket-key-prefix-here"
+
+  file_types = ["csv", "xls", "xlsx", "json"]
+  file_size_min = "20"
+  file_size_max = "50000"
+
+  upload_schedule = "cron(0 0 * * ? *)"
+  upload_timezone = "America/New_York"
+
+  agencies = [
+    {
+      name = "Agency 1",
+      sftp_user = "agency1",
+      file_paths = [
+        "/path/to/file1.csv",
+        "/path/to/file2.xlsx",
+        "/path/to/file3.json"
+      ]
+    },
+    {
+      name = "Agency 2",
+      sftp_user = "agency2",
+      file_paths = [
+        "/path/to/file4.csv",
+        "/path/to/file5.xls",
+        "/path/to/file6.json"
+      ]
+    },
+    {
+      name = "Agency 3",
+      sftp_user = "agency3",
+      file_paths = [
+        "/path/to/file7.csv",
+        "/path/to/file8.xlsx",
+        "/path/to/file9.json"
+      ]
+    }
+  ]
+}
