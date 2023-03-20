@@ -1,0 +1,72 @@
+provider "aws" {
+    region     = "eu-west-1"
+  access_key = "my-access key"
+  secret_key = "my-secret key"
+  }
+
+resource  "aws_iam_role" "sftp_role" {
+  name = "sftp_role"
+
+  assume_role_policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+        "Effect": "Allow",
+        "Principal": {
+            "Service": "transfer.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole"
+        }
+    ]
+  })
+
+tags = {
+    Name = "sftp_role"
+}
+}
+
+resource "aws_iam_role_policy" "sftp_policy" {
+  name = "sftp-policy"
+  role = aws_iam_role.sftp_role.id
+
+  policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+        "Sid": "AllowFullAccesstoS3",
+        "Effect": "Allow",
+        "Action": [
+            "S3:*"
+        ],
+        "Resource": "*"
+        },
+        {
+			    "Effect": "Allow",
+          "Action": [
+            "s3:ListBucket",
+            "s3:GetBucketLocation"
+          ],
+         "Resource": [
+            "arn:aws:iam::aws:policy/role/sftp_role"
+                      ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:PutObject",
+            "s3:GetObject",
+            "s3:DeleteObject",
+            "s3:DeleteObjectVersion",
+            "s3:GetObjectVersion",
+            "s3:GetObjectACL",
+            "s3:PutObjectACL"
+          ],
+          "Resource": [
+            "arn:aws:iam::aws:policy/sftp_role*"
+                    ]
+      }
+    ]
+}
+POLICY
+}
