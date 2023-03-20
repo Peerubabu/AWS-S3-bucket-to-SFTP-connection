@@ -1,0 +1,15 @@
+provider "aws" {
+  region = "eu-west-1"
+    access_key = "AKIAS5RILL3U7LEERR5F"
+    secret_key = "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"
+}
+
+resource "aws_s3_bucket" "peeru_bucket" {
+  bucket = "peeru-bucket"
+}
+
+resource "aws_s3_bucket_object" "My_File" {
+  bucket = aws_s3_bucket.peeru_bucket.id
+  key    = "my-folder/Sample.txt"
+  source = "C:/Users/Admin/Desktop/Terraform Learnings/S3/Sample.txt"
+}
