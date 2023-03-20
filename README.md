@@ -4,9 +4,9 @@ The file size would be 20KB to 50MB. Due to nature of data, each agency wants to
 network latency for upload can be an issue. Everyone in each agency will share the same SFTP user you create for that agency.
 
 Following resources will be created by the repo :
-•	First, let’s set up the necessary resources in Terraform. We’ll need to create a SFTP server for each agency, as well as S3 bucket to store the upload files. (As of now in this document am trying with only single agency)
-•	Next, we’ll need to create an IAM user for each agency to access the S3 bucket. (Created IAM user only for single Agency)
-•	Now that we have the necessary resources set up, we can create a code in terraform to facilitate the transfer of files from the SFTP server to the S3 bucket.
+1. First, let’s set up the necessary resources in Terraform. We’ll need to create a SFTP server for each agency, as well as S3 bucket to store the upload files. (As of now in this document am trying with only single agency)
+2. Next, we’ll need to create an IAM user for each agency to access the S3 bucket. (Created IAM user only for single Agency)
+3. Now that we have the necessary resources set up, we can create a code in terraform to facilitate the transfer of files from the SFTP server to the S3 bucket.
 
 Step – 1: Create S3 Bucket in eu-west-1
 Step -2: Create SFTP user account and IAM Service role with right permissions.
